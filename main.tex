@@ -1,0 +1,265 @@
+\documentclass[11pt]{scrartcl} % Evan uses KOMA-Script classes
+\usepackage[utf8]{inputenc}
+\usepackage[sexy]{evan} % This pulls in all his boxes, fonts, and shortcuts
+
+\begin{document}
+
+\title{Cool Stuff}
+\author{Paolo Joacquin Faenag}
+\date{\today}
+\maketitle
+\tableofcontents
+
+\section{Abstract Algebra}
+
+\subsection{Group Theory}
+
+\begin{theorem}[Lagrange's Theorem]
+    Let $G$ be a finite group and $H$ be a subgroup of $G$. Then the order of $H$ divides the order of $G$, and the index $[G:H] = |G|/|H|$ is exactly the number of distinct left cosets of $H$ in $G$.
+\end{theorem}
+\begin{proof}
+    We define an equivalence relation on $G$ by setting $a \sim b$ if and only if $a^{-1}b \in H$. The equivalence classes under this relation are precisely the left cosets of $H$, which take the form $aH = \{ah \mid h \in H\}$. Because equivalence classes partition the underlying set, $G$ is the disjoint union of the distinct left cosets of $H$.
+    
+    Next, we establish that every left coset has the exact same cardinality as $H$. For any fixed $a \in G$, define the map $f \colon H \to aH$ by $f(h) = ah$. This map is surjective by definition. It is also injective because $ah_1 = ah_2$ implies $h_1 = h_2$ by left cancellation in $G$. Thus, $f$ is a bijection, and $|aH| = |H|$.
+    
+    Let $k = [G:H]$ be the number of distinct left cosets. Since $G$ is partitioned into $k$ disjoint sets, each of exactly size $|H|$, it logically follows that $|G| = k|H|$. Therefore, $|H|$ divides $|G|$.
+\end{proof}
+
+\begin{theorem}[First Isomorphism Theorem]  
+    If $f:G \to H$ is a homomorphism, then ker$f$ is a normal subgroup of $G$ and $$ G/\text{ker}f \cong \text{im}f.$$
+\end{theorem}
+\begin{proof}
+    Let $K = \text{ker}f$. We claim that $K$ is a subgroup. It does contain $1$ (because $f(1) = 1)$; if $x,y \in K$ (so that $f(x) = 1 = f(y)$, then $f(xy) = f(x)f(y) =1$ and $xy \in K$; if $x \in K$, then $f(x^{-1}) = f(x)^{-1} = 1$ and $x^{-1} \in K$. Furthermore, the subgroup $K$ is normal: if $x\in K$ and $g\in G$, then $f(gxg^{-1}) = f(g)f(x)f(g)^{-1} = f(g)f(g)^{-1}$ and so $gxg^{-1} \in K$.
+    
+    Define $\phi: G/k \to \text{im}f$ by $\phi(xK) = f(x)$. Now $\phi$ is well defined: if $x'K = xK$, then $x' = xk$ for some $k\in K$, and $f(x') = f(xk) = f(x)f(k) = f(x)$. It is routine to check that $\phi$ is homomorphism with $\text{im}\phi = \text{im}f$. Finally, $\phi$ is an injection, because $\phi(xK)=1$ implies $f(x)=1$, hence $x\in K$ and $xK = K$.
+\end{proof}
+
+\begin{lemma}
+    If $K$ and $H$ are subgroups of $G$ with $K$ normal in $G$, then $K \vee H = KH = \{kh : k \in K \text{ and } h \in H \} = HK.$
+\end{lemma}
+\begin{proof}
+    Clearly $KH \subset K \vee H$. For the reverse inclusion, it suffices to prove that $KH$ is a subgroup, for it does contain $K \cup H$.
+    Now $khk_1h_1 = k(hk_1h^{-1})hh_1 = (kk_2)(hh_1) \in KH$ for some $k_2 \in K$(because $K$ is normal). Also $(kh)^{-1} = h\inv k\inv = (h\inv k\inv h)h\inv = k'h\inv \in KH$ for some $k' \in K$(again, because $K$ is normal). Therefore, $KH$ is a subgroup.
+    if $hk \in HK$, then $hk = (hkh\inv)h = k'h \in KH$ for some $k' \in K$, and so $HK subset KH$; the reverse inclusion is proved similarly. 
+\end{proof}
+
+\begin{theorem}[Second Isomorphism Theorem]
+    If $K$ and $H$ are subgroups $G$ with $K$ normal in $G$ with $K$ normal in $G$, then $K \cap H$ is a normal subgroup of $H$ and $$ H/(K\cap H) \cong KH/K.$$        
+\end{theorem}
+
+\begin{proof}
+     Let $\pi: G \to G/K$ be the natural map, defined by $\pi(x) = xK$, and let $f: H \to G/K$ be the restriction $ \pi | H$. Now ker$f = K \cap H$ and im$f$ is the family of all cosets $xK$ in $G/K$ with $x\in H$ (hence im$f=KH/K$). The first isomorphism theorem now gives the result.
+\end{proof}
+
+\begin{theorem}[Third Isomorphism Theorem]
+\end{theorem} 
+\begin{theorem}[The Orbit-Stabilizer Theorem]
+    Let $G$ be a finite group acting on a set $X$. For any $x \in X$, the size of the orbit of $x$ multiplied by the size of its stabilizer subgroup equals the order of the group:
+    \[ |G| = |\text{Orb}(x)| \cdot |\text{Stab}(x)|. \]
+\end{theorem}
+\begin{proof}
+    Fix $x \in X$. The stabilizer of $x$, denoted $H = \text{Stab}(x) = \{g \in G \mid g \cdot x = x\}$, is a subgroup of $G$. The orbit of $x$ is the set $\text{Orb}(x) = \{g \cdot x \mid g \in G\}$.
+    
+    We construct a bijection between the left cosets of $H$ in $G$ and the elements of the orbit $\text{Orb}(x)$. Define the mapping $\phi \colon G/H \to \text{Orb}(x)$ by $\phi(gH) = g \cdot x$. 
+    
+    \textbf{Well-definedness and Injectivity:} We must show that $\phi$ is well-defined and injective, which amounts to proving that $g_1 H = g_2 H \iff g_1 \cdot x = g_2 \cdot x$. We observe the following chain of equivalences:
+    \[ g_1 H = g_2 H \iff g_2^{-1}g_1 \in H \iff (g_2^{-1}g_1) \cdot x = x \iff g_1 \cdot x = g_2 \cdot x. \]
+    This confirms both that the map's output does not depend on the choice of coset representative, and that distinct cosets perfectly map to distinct elements of the orbit.
+    
+    \textbf{Surjectivity:} For any $y \in \text{Orb}(x)$, there exists some $g \in G$ such that $y = g \cdot x$. By definition, $\phi(gH) = y$, making the map surjective.
+    
+    Since $\phi$ is a bijection, the number of left cosets $[G:H]$ is exactly $|\text{Orb}(x)|$. By Lagrange's Theorem, $|G| = [G:H] \cdot |H|$, which yields $|G| = |\text{Orb}(x)| \cdot |\text{Stab}(x)|$.
+\end{proof}
+
+\begin{theorem}[Cauchy's Theorem]
+    If $G$ is a finite group and $p$ is a prime number dividing $|G|$, then $G$ contains an element of order $p$.
+\end{theorem}
+\begin{proof}
+    We employ McKay's combinatorial proof via group actions. Consider the set of $p$-tuples of elements from $G$ whose product is the identity:
+    \[ X = \{ (g_1, g_2, \dots, g_p) \in G^p \mid g_1 g_2 \dots g_p = e \}. \]
+    The choice of the first $p-1$ elements uniquely determines the final element as $g_p = (g_1 \dots g_{p-1})^{-1}$. Thus, the cardinality of $X$ is exactly $|G|^{p-1}$. Since $p$ divides $|G|$, it follows that $p$ also divides $|X|$.
+    
+    We define an action of the cyclic group $\mathbb{Z}_p = \langle \sigma \rangle$ on $X$ by cyclic permutation. Specifically, let the generator $\sigma$ act by shifting the coordinates:
+    \[ \sigma \cdot (g_1, g_2, \dots, g_p) = (g_2, g_3, \dots, g_p, g_1). \]
+    Notice that if $g_1 g_2 \dots g_p = e$, then conjugating by $g_1^{-1}$ yields $g_2 \dots g_p g_1 = e$. Thus, the action is well-defined and maps $X$ into itself.
+    
+    By the Orbit-Stabilizer Theorem, the size of every orbit under this $\mathbb{Z}_p$-action must divide $|\mathbb{Z}_p| = p$. Since $p$ is prime, every orbit has size exactly $1$ or $p$.
+    An orbit has size $1$ if and only if the tuple is fixed under cyclic shifts, which requires $g_1 = g_2 = \dots = g_p = g$, and thus $g^p = e$.
+    
+    Let $k$ be the number of orbits of size $1$. The tuple $(e, e, \dots, e)$ clearly forms an orbit of size $1$, so $k \ge 1$. The total number of elements $|X|$ is the sum of the sizes of the individual orbits. Since $|X|$ is divisible by $p$, and all other orbits have size exactly $p$, the number of orbits of size $1$ must also be a multiple of $p$. 
+    
+    Since $k \ge 1$ and $p$ divides $k$, we must have $k \ge p \ge 2$. Therefore, there exists at least one other tuple $(g, g, \dots, g)$ with $g \neq e$ such that $g^p = e$. This $g$ is our desired element of order $p$.
+\end{proof}
+
+\subsection{Ring Theory}
+
+\begin{theorem}[Maximal Ideals and Fields]
+    Let $R$ be a commutative ring with identity. An ideal $M \subset R$ is maximal if and only if the quotient ring $R/M$ is a field.
+\end{theorem}
+\begin{proof}
+    By the Correspondence Theorem for Rings, the ideals of $R/M$ are in exact bijection with the ideals of $R$ that contain $M$. 
+    
+    \textbf{Necessity:} Suppose $M$ is a maximal ideal. By definition, there are no intermediate ideals strictly between $M$ and $R$. Consequently, under the correspondence bijection, the quotient ring $R/M$ has exactly two ideals: the zero ideal $(0) = M/M$ and the entire ring $R/M$. A commutative ring with identity possesses exactly two ideals if and only if it is a field. Thus, $R/M$ is a field.
+    
+    \textbf{Sufficiency:} Suppose $R/M$ is a field. The only ideals of a field are the zero ideal and the field itself. By the correspondence bijection, there are exactly two ideals in $R$ containing $M$, which must be $M$ itself and $R$. This dictates that no proper ideal strictly contains $M$, rendering $M$ maximal.
+\end{proof}
+
+\begin{theorem}[Prime Ideals and Integral Domains]
+    Let $R$ be a commutative ring with identity. A proper ideal $P \subset R$ is prime if and only if the quotient ring $R/P$ is an integral domain.
+\end{theorem}
+\begin{proof}
+    We evaluate the condition for zero-divisors in the quotient ring $R/P$. 
+    
+    \textbf{Necessity:} Suppose $P$ is a prime ideal. Let $(a+P)$ and $(b+P)$ be elements of $R/P$ such that their product is the zero element of the quotient, meaning $(a+P)(b+P) = ab + P = 0 + P$. This implies that $ab \in P$. By the definition of a prime ideal, either $a \in P$ or $b \in P$. Translating this back to the quotient ring, either $a+P = 0+P$ or $b+P = 0+P$. Since there are no non-zero zero-divisors, $R/P$ is an integral domain.
+    
+    \textbf{Sufficiency:} Suppose $R/P$ is an integral domain. Let $a, b \in R$ such that $ab \in P$. Moving to the quotient ring, this means $(a+P)(b+P) = ab+P = 0+P$. Because $R/P$ is an integral domain, it has no zero-divisors, so we must have either $a+P = 0+P$ or $b+P = 0+P$. This forces either $a \in P$ or $b \in P$, exactly satisfying the definition of a prime ideal.
+\end{proof}
+
+\begin{theorem}[The Chinese Remainder Theorem for Rings]
+    Let $R$ be a commutative ring with identity, and let $I_1, I_2, \dots, I_n$ be pairwise comaximal ideals (i.e., $I_i + I_j = R$ for all $i \neq j$). Then the natural map 
+    \[ \phi \colon R \to R/I_1 \times R/I_2 \times \dots \times R/I_n \]
+    defined by $\phi(r) = (r + I_1, r + I_2, \dots, r + I_n)$ is a surjective ring homomorphism with kernel $\bigcap_{i=1}^n I_i$. Consequently, $R / \bigcap_{i=1}^n I_i \cong \prod_{i=1}^n R/I_i$.
+\end{theorem}
+\begin{proof}
+    The map $\phi$ is clearly a ring homomorphism by component-wise evaluation. Its kernel consists of all elements $r \in R$ such that $r \in I_i$ for every $i$, giving $\ker \phi = \bigcap_{i=1}^n I_i$. The heavy lifting of the proof is demonstrating surjectivity.
+    
+    We first prove the case for $n=2$. Since $I_1$ and $I_2$ are comaximal, there exist elements $x \in I_1$ and $y \in I_2$ such that $x + y = 1$. Let $(a + I_1, b + I_2)$ be an arbitrary element in $R/I_1 \times R/I_2$. Consider the element $r = ay + bx$. 
+    Modulo $I_1$, we observe $x \equiv 0$, yielding $r \equiv ay \equiv a(1-x) \equiv a \pmod{I_1}$. 
+    Modulo $I_2$, we observe $y \equiv 0$, yielding $r \equiv bx \equiv b(1-y) \equiv b \pmod{I_2}$. 
+    Thus, $\phi(r) = (a + I_1, b + I_2)$, proving surjectivity for $n=2$.
+    
+    For $n > 2$, we proceed by constructing elements $e_i \in R$ such that $e_i \equiv 1 \pmod{I_i}$ and $e_i \equiv 0 \pmod{I_j}$ for all $j \neq i$. Fix $i$. For each $j \neq i$, we have $I_i + I_j = R$, so we can find $x_j \in I_i$ and $y_j \in I_j$ such that $x_j + y_j = 1$. 
+    
+    Taking the product over all $j \neq i$, we get $\prod_{j \neq i} (x_j + y_j) = 1$. Expanding this product, every term contains at least one $x_j$ (and thus belongs to $I_i$) except the single term $\prod y_j$. Let $e_i = \prod_{j \neq i} y_j$. Then $e_i \in \bigcap_{j \neq i} I_j$, forcing $e_i \equiv 0 \pmod{I_j}$ for $j \neq i$. Moreover, $1 - e_i \in I_i$, so $e_i \equiv 1 \pmod{I_i}$.
+    
+    Given any arbitrary target $(r_1 + I_1, \dots, r_n + I_n)$, the element $r = r_1 e_1 + \dots + r_n e_n$ satisfies $\phi(r) = (r_1 + I_1, \dots, r_n + I_n)$. Thus, $\phi$ is surjective. The result then follows immediately from the First Isomorphism Theorem.
+\end{proof}
+
+\end{theorem}
+\section{Graph Theory \& Combinatorics}
+
+\begin{lemma}[The Handshaking Lemma]
+    Let $G = (V,E)$ be a finite undirected graph. Then the sum of the degrees of all vertices is twice the number of edges:
+    \[ \sum_{v \in V} \deg(v) = 2|E|. \]
+\end{lemma}
+\begin{proof}
+    We proceed by the method of double counting. Consider the set of incidence pairs $(v, e)$, where $v \in V$ is a vertex incident to the edge $e \in E$. 
+    
+    On one hand, if we group these pairs by vertices, each vertex $v$ participates in exactly $\deg(v)$ such pairs, yielding a total of $\sum_{v \in V} \deg(v)$ pairs. On the other hand, if we group them by edges, each edge $e \in E$ has exactly two endpoints, and thus participates in exactly two pairs. Summing over all edges yields $2|E|$ pairs. Equating the two counts yields the result.
+\end{proof}
+
+\begin{theorem}[Ramsey's Theorem for $R(3,3)$]
+    In any group of 6 people, there is always either a group of 3 mutual friends or a group of 3 mutual strangers. Equivalently, any 2-coloring of the edges of the complete graph $K_6$ contains a monochromatic triangle.
+\end{theorem}
+
+\begin{proof}
+    Let the vertices of $K_6$ represent the people, and let the edges be colored red (friends) or blue (strangers). Choose an arbitrary vertex $v$. Since the degree of $v$ is 5, the Pigeonhole Principle dictates that at least $\lceil 5/2 \rceil = 3$ edges incident to $v$ must share the same color. Without loss of generality, assume there are 3 red edges connecting $v$ to vertices $A, B,$ and $C$.
+    
+    Now consider the triangle formed by $A, B,$ and $C$. If any single edge of this triangle (say $AB$) is red, then the vertices $v, A,$ and $B$ form a monochromatic red triangle. Alternatively, if no edges of the triangle $ABC$ are red, then they must all be blue, meaning $A, B,$ and $C$ form a monochromatic blue triangle. In either case, a monochromatic triangle is forced.
+\end{proof}
+\begin{theorem}[Euler's Theorem for Eulerian Graphs]
+    A finite, connected, undirected graph $G$ contains an Eulerian circuit if and only if every vertex in $G$ has an even degree.
+\end{theorem}
+
+\begin{proof}
+    We must establish both necessity and sufficiency. 
+    
+    \textbf{Necessity:} The forward implication is an elegant consequence of parity. Suppose $G$ possesses an Eulerian circuit, which by definition traverses every edge exactly once and returns to its starting vertex. As we trace this circuit, every time we enter a vertex $v$, we must also inevitably exit it. Thus, each visit to $v$ consumes exactly two incident edges (one in, one out). Since every edge incident to $v$ is traversed exactly once during the entire circuit, the total number of edges incident to $v$ must be a multiple of two. Hence, $\deg(v)$ is even for all $v \in V$.
+
+    \textbf{Sufficiency:} For the reverse direction, we proceed by induction on the number of edges $|E|$. The base case is trivial. Assume the statement holds for all connected graphs with strictly fewer than $|E|$ edges. 
+    
+    Since $G$ is connected and every vertex has an even degree (meaning at least degree 2), $G$ cannot be a tree and must contain a cycle. Start at an arbitrary vertex $u$ and walk along unvisited edges. Because every vertex has an even degree, we can never get "stuck" at a vertex other than our starting vertex $u$; every time we enter a new vertex, there is guaranteed to be an unvisited edge leaving it. This walk must eventually close upon itself, forming a cycle $C$.
+    
+    If $C$ contains all the edges of $G$, the proof is complete. If not, we remove the edges of $C$ from $G$. The resulting graph, $G \setminus C$, may break into several disconnected components. However, because we removed exactly two edges from every vertex involved in $C$, every vertex in $G \setminus C$ still has an even degree. 
+    
+    By our inductive hypothesis, each non-trivial connected component of $G \setminus C$ possesses its own Eulerian circuit. Furthermore, because the original graph $G$ was connected, each of these components must share at least one vertex with the cycle $C$. 
+    
+    
+    To construct the Eulerian circuit for the entirety of $G$, we begin traversing $C$. Whenever we reach a vertex that acts as an intersection point with a component of $G \setminus C$, we pause our walk on $C$, "splice in" the Eulerian circuit of that component, traverse it completely, and then resume our walk along $C$. This combined journey traverses every edge of $G$ exactly once, completing the proof.
+\end{proof}
+\section{Real Analysis}
+
+\begin{theorem}[Banach Fixed Point Theorem]
+    Let $(X, d)$ be a non-empty complete metric space and let $T \colon X \to X$ be a contraction mapping; that is, there exists a constant $c \in [0, 1)$ such that $d(T(x), T(y)) \le c \cdot d(x, y)$ for all $x, y \in X$. Then $T$ admits a unique fixed point $x^* \in X$.
+\end{theorem}
+\begin{proof}
+    We first establish existence. Choose an arbitrary $x_0 \in X$ and define a sequence by $x_{n+1} = T(x_n)$. We claim $(x_n)$ is a Cauchy sequence. By induction on the contraction property, the distance between consecutive terms is bounded by $d(x_n, x_{n+1}) \le c^n d(x_0, x_1)$.
+    For any $m > n$, we use the triangle inequality and the geometric series to bound $d(x_n, x_m)$:
+    \[ d(x_n, x_m) \le \sum_{i=n}^{m-1} d(x_i, x_{i+1}) \le d(x_0, x_1) \sum_{i=n}^{m-1} c^i \le d(x_0, x_1) \frac{c^n}{1-c}. \]
+    Since $c < 1$, the term $c^n \to 0$ as $n \to \infty$. Thus, $(x_n)$ is Cauchy. Because $X$ is complete, the sequence converges to some limit $x^* \in X$. Since $T$ is a contraction, it is uniformly continuous, so $T(x^*) = T(\lim x_n) = \lim T(x_n) = \lim x_{n+1} = x^*$. Thus $x^*$ is a fixed point.
+    
+    For uniqueness, suppose there exists another fixed point $y^*$. Then $d(x^*, y^*) = d(T(x^*), T(y^*)) \le c \cdot d(x^*, y^*)$. Since $c < 1$, this inequality can only hold if $d(x^*, y^*) = 0$, meaning $x^* = y^*$.
+\end{proof}
+
+\section{Complex Analysis}
+
+\begin{theorem}[Liouville's Theorem]
+    Every bounded entire function is constant.
+\end{theorem}
+\begin{proof}
+    Let $f \colon \mathbb{C} \to \mathbb{C}$ be an entire function (holomorphic everywhere), and suppose there exists $M > 0$ such that $|f(z)| \le M$ for all $z \in \mathbb{C}$. 
+    Fix any $z_0 \in \mathbb{C}$ and let $R > 0$ be the radius of a circle $C_R$ centered at $z_0$. By Cauchy's Integral Formula for derivatives, we have
+    \[ f'(z_0) = \frac{1}{2\pi i} \oint_{C_R} \frac{f(z)}{(z-z_0)^2} \, dz. \]
+    We apply the standard estimation lemma (the ML-inequality). The length of $C_R$ is $2\pi R$, and on the curve, $|z - z_0| = R$. Thus,
+    \[ |f'(z_0)| \le \frac{1}{2\pi} \cdot \frac{M}{R^2} \cdot 2\pi R = \frac{M}{R}. \]
+    Since $f$ is entire, this inequality holds for any arbitrary $R > 0$. Taking the limit as $R \to \infty$, we see that $|f'(z_0)| \le 0$, which forces $f'(z_0) = 0$. Since $z_0$ was arbitrary, the derivative is zero everywhere on $\mathbb{C}$, implying $f$ is a constant function.
+\end{proof}
+
+\section{Numerical Analysis}
+
+\begin{theorem}[Polynomial Interpolation]
+    Given $n+1$ distinct points $(x_0, y_0), \dots, (x_n, y_n)$ in $\mathbb{R}^2$, there exists a unique polynomial $P(x)$ of degree at most $n$ such that $P(x_i) = y_i$ for all $i = 0, \dots, n$.
+\end{theorem}
+\begin{proof}
+    \textbf{Existence (Lagrange Construction):} We construct the polynomial explicitly. Define the Lagrange basis polynomials $\ell_i(x)$ for $0 \le i \le n$ as:
+    \[ \ell_i(x) = \prod_{0 \le j \le n, j \neq i} \frac{x - x_j}{x_i - x_j}. \]
+    Notice that $\ell_i(x_i) = 1$ and $\ell_i(x_j) = 0$ for $i \neq j$. Furthermore, each $\ell_i(x)$ is a product of $n$ linear terms, so its degree is exactly $n$. The desired polynomial is the linear combination:
+    \[ P(x) = \sum_{i=0}^n y_i \ell_i(x). \]
+    By construction, $P(x_i) = y_i$ for all $i$, and $\deg(P) \le n$.
+    
+    \textbf{Uniqueness:} Suppose there is another polynomial $Q(x)$ of degree at most $n$ satisfying $Q(x_i) = y_i$. Consider the difference polynomial $D(x) = P(x) - Q(x)$. The degree of $D(x)$ is at most $n$. However, $D(x_i) = P(x_i) - Q(x_i) = 0$ for all $n+1$ points $x_0, \dots, x_n$. The Fundamental Theorem of Algebra states that a non-zero polynomial of degree $n$ can have at most $n$ roots. Since $D(x)$ has $n+1$ roots, it must be the identically zero polynomial, forcing $P(x) = Q(x)$.
+\end{proof}
+
+\section{Mathematical Statistics}
+
+\begin{theorem}[Central Limit Theorem]
+    Let $X_1, X_2, \dots$ be a sequence of independent and identically distributed random variables with expected value $\mu$ and finite variance $\sigma^2 > 0$. Then the sequence of random variables
+    \[ Z_n = \frac{\sum_{i=1}^n X_i - n\mu}{\sigma \sqrt{n}} \]
+    converges in distribution to a standard normal random variable $\mathcal{N}(0,1)$ as $n \to \infty$.
+\end{theorem}
+\begin{proof}
+    Without loss of generality, we may center and scale the random variables by assuming $\mu = 0$ and $\sigma = 1$ (by replacing $X_i$ with $(X_i-\mu)/\sigma$). Thus, $Z_n = \frac{1}{\sqrt{n}} \sum_{i=1}^n X_i$.
+    
+    Let $M_X(t)$ be the moment generating function (MGF) of $X_i$. By Taylor's Theorem, expanding $M_X(t)$ around $t=0$ gives:
+    \[ M_X(t) = M_X(0) + t M'_X(0) + \frac{t^2}{2} M''_X(0) + \mathcal{O}(t^3) = 1 + 0 + \frac{t^2}{2} + \mathcal{O}(t^3). \]
+    By the properties of MGFs for independent variables, the MGF of $Z_n$ is:
+    \[ M_{Z_n}(t) = \left( M_X\left(\frac{t}{\sqrt{n}}\right) \right)^n = \left( 1 + \frac{t^2}{2n} + \mathcal{O}\left(\frac{t^3}{n^{3/2}}\right) \right)^n. \]
+    Taking the limit as $n \to \infty$, we invoke the standard calculus limit $\lim_{n \to \infty} (1 + x/n)^n = e^x$. The higher-order error terms vanish faster than $1/n$, yielding:
+    \[ \lim_{n \to \infty} M_{Z_n}(t) = e^{t^2/2}. \]
+    This limit is precisely the moment generating function of the standard normal distribution $\mathcal{N}(0,1)$. Since MGFs uniquely determine distributions, $Z_n \xrightarrow{d} \mathcal{N}(0,1)$.
+\end{proof}
+
+\section{Linear Algebra}
+
+\begin{theorem}[The Rank-Nullity Theorem]
+    Let $V$ and $W$ be vector spaces over a field, with $V$ finite-dimensional. Let $T \colon V \to W$ be a linear transformation. Then
+    \[ \dim(V) = \dim(\ker T) + \dim(\text{im } T). \]
+\end{theorem}
+\begin{proof}
+    Let $n = \dim(V)$ and $k = \dim(\ker T)$. Since $\ker T$ is a subspace of $V$, we can choose a basis $\{v_1, \dots, v_k\}$ for $\ker T$. By the Basis Extension Theorem, we can append $m = n - k$ linearly independent vectors to form a full basis for $V$:
+    \[ \mathcal{B}_V = \{v_1, \dots, v_k, u_1, \dots, u_m\}. \]
+    We claim that the set $S = \{T(u_1), \dots, T(u_m)\}$ forms a basis for $\text{im } T$. 
+    
+    First, we show $S$ spans $\text{im } T$. For any $w \in \text{im } T$, there exists $v \in V$ such that $T(v) = w$. Writing $v$ as a linear combination of $\mathcal{B}_V$, we have $v = \sum c_i v_i + \sum d_j u_j$. Applying the linear map $T$, and noting that $T(v_i) = 0$ because they are in the kernel, we obtain:
+    \[ w = T(v) = \sum c_i T(v_i) + \sum d_j T(u_j) = \sum d_j T(u_j). \]
+    Thus, $S$ spans the image.
+    
+    Next, we verify linear independence. Suppose $\sum a_j T(u_j) = 0$. By linearity, this means $T(\sum a_j u_j) = 0$. This implies the vector $x = \sum a_j u_j$ lies in $\ker T$. Thus, $x$ can be written in terms of the kernel's basis: $x = \sum b_i v_i$. Rearranging gives:
+    \[ \sum a_j u_j - \sum b_i v_i = 0. \]
+    Because $\mathcal{B}_V$ is a basis for $V$, all coefficients in this linear combination must be zero. Specifically, $a_j = 0$ for all $j$, proving $S$ is linearly independent.
+    
+    Therefore, $S$ is a basis for $\text{im } T$, meaning $\dim(\text{im } T) = m = n - k = \dim(V) - \dim(\ker T)$.
+\end{proof}
+
+\end{document}
+\end{document}
