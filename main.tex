@@ -1,10 +1,10 @@
-\documentclass[11pt]{scrartcl} % Evan uses KOMA-Script classes
+\documentclass[11pt]{scrartcl}
 \usepackage[utf8]{inputenc}
-\usepackage[sexy]{evan} % This pulls in all his boxes, fonts, and shortcuts
+\usepackage[sexy]{evan} 
 
 \begin{document}
 
-\title{Cool Stuff}
+\title{Math Stuff}
 \author{Paolo Joacquin Faenag}
 \date{\today}
 \maketitle
@@ -52,7 +52,31 @@
 \end{proof}
 
 \begin{theorem}[Third Isomorphism Theorem]
+    If $S \subset K$ are normal subgroups of $G$, then $K/S$ is a normal subgroup of $G/S$ and $$(G/S)/(K/S) \cong G/K$$
 \end{theorem} 
+\begin{proof}
+    The function  $f: G/S \to G/K$ given by $xS \mapsto xK$ is well-defined because $S \subset K$. That is, if $xS = x'S$, then $x(x'\inv) \in S$ and $x(x')\inv \in K$, so that $xK = x'K$. This implies that $f(xS)=(x'S).$
+    Let $xK \in G/K$. Then we can choose $x$ to be the representative of a coset of $S$ in $G$, $xS\in G/S$. Thus $f(xS) = xK,$ and $f$ is surjective. Let $xS \in \text{ker}f$. Then $f(xS) = xK = K$, which is only possible if $x \in K$. Consequently, ker$f = K/S$. The result now follows from the first isomorphism theorem.
+\end{proof}
+\begin{theorem}[Correspondence Theorem]
+   Let $K$ be a normal subgroup of $G$, and let $S^*$ be a subgroup of $G^* = G/K$.
+   \begin{enumerate}
+       \item There is a unique intermediate subgroup $S$, i.e., $K \subset S \subset G$, with $S/K = S^*$;
+       \item If $S^*$ is a normal subgroup of $G^*$, then $S$ is normal in $G$;
+       \item $[G^*:S^*] = [G:S]$;
+       \item If $T^*$ is normal in $S^*$, then $T$ is normal in $S$ and $S^* / T^* \cong S/T$.
+       
+   \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}
+        \item Let $S = \{x \in G : xK \in S^*\}$. We claim that $S$ is a subgroup. Let $a,b \in S$. Then $aK, bK \in S^*$, which implies $(aK)(bK) = (ab)K \in S^*$, since $S^*$ is a subgroup of $G^*$, and so $ab \in S$. Since $S^*$ is a subgroup of $G^*$, there exists $a'K \in S^*$ such that $(aK)(a'K) = (aa')K \in S^*$. And so $a' \in S$ and $S$ is a subgroup of $G$.
+        \item  Suppose $S^*$ is normal in $G^*$. Then if $x\in G$ and $s \in S$ $(xK)(sK)(x\inv K) = (xsx\inv K) \in S^*$, and $xsx\inv \in S$. Thus $S$ is normal in $G$.
+        \item We have $$[G^*:S^*] = |G^*|/|S^*| =|G/K|/|S/K| = (|G|/|K|)/(|S|/|K|)=|G|/|S| = [G:S].$$
+        \item Suppose $T^*$ is normal in $S^*$. Then, by (2), $T$ is normal in $S$. Furthermore, by the third isomorphism theorem, $S^*/T^* \cong S/T$. 
+    \end{enumerate}
+\end{proof}
+
 \begin{theorem}[The Orbit-Stabilizer Theorem]
     Let $G$ be a finite group acting on a set $X$. For any $x \in X$, the size of the orbit of $x$ multiplied by the size of its stabilizer subgroup equals the order of the group:
     \[ |G| = |\text{Orb}(x)| \cdot |\text{Stab}(x)|. \]
@@ -60,9 +84,9 @@
 \begin{proof}
     Fix $x \in X$. The stabilizer of $x$, denoted $H = \text{Stab}(x) = \{g \in G \mid g \cdot x = x\}$, is a subgroup of $G$. The orbit of $x$ is the set $\text{Orb}(x) = \{g \cdot x \mid g \in G\}$.
     
-    We construct a bijection between the left cosets of $H$ in $G$ and the elements of the orbit $\text{Orb}(x)$. Define the mapping $\phi \colon G/H \to \text{Orb}(x)$ by $\phi(gH) = g \cdot x$. 
-    
-    \textbf{Well-definedness and Injectivity:} We must show that $\phi$ is well-defined and injective, which amounts to proving that $g_1 H = g_2 H \iff g_1 \cdot x = g_2 \cdot x$. We observe the following chain of equivalences:
+     We construct a bijection between the left cosets of $H$ in $G$ and the elements of the orbit $\text{Orb}(x)$. Define the mapping $\phi \colon G/H \to \text{Orb}(x)$ by $\phi(gH) = g \cdot x$. 
+well-definedness
+ \textbf{ and Injectivity:} We must show that $\phi$ is well-defined and injective, which amounts to proving that $g_1 H = g_2 H \iff g_1 \cdot x = g_2 \cdot x$. We observe the following chain of equivalences:
     \[ g_1 H = g_2 H \iff g_2^{-1}g_1 \in H \iff (g_2^{-1}g_1) \cdot x = x \iff g_1 \cdot x = g_2 \cdot x. \]
     This confirms both that the map's output does not depend on the choice of coset representative, and that distinct cosets perfectly map to distinct elements of the orbit.
     
@@ -93,6 +117,13 @@
 
 \subsection{Ring Theory}
 
+\begin{theorem}[Correspondence Theorem for Rings]
+   If $I$ is a proper ideal in a ring $R$, then there is a bijection from the family of all intermediate ideals $J$, where $I \subset J \subset R$, to the family of all ideals in $R/I$, given by $$ J \mapsto \pi(J) = J/I = \{a + I: a\in J\},$$ where $\pi: R \to R/I$ is the natural map. Moreover, if $ J \subset J'$ are intermediate ideals, then $\pi(J) \subset \pi(J')$.
+\end{theorem}
+
+\begin{proof}
+    Suppose $I$ is a proper ideal in a ring $R$ and let $\mathcal{J}$ be the family of all ideals in $R/I$. If $J^* \in \mathcal{J}$, then $J^*$ is a subgroup of the quotient group $R/I$. By the correspondence theorem for groups, there exists a unique intermediate subgroup $J$, with $I \subset J \subset R$ and $J/I = J^*$. This subgroup $J$ is also an ideal, since if $a \in J$ and $r \in R$, we have that $$(r + I)(a + I) = (ra) + I \in J^*,$$ and so $ra \in J$ because $J^*$ is an ideal. Thus the map $J \mapsto J/I$ is a bijection. Furthermore, if $J \subset J^'$ are intermediate ideals, then there exists ideals $J^*=\pi(J)$ and $(J')^* = \pi(J')$, respectively, in $R/I$. Let $j + I \in \pi(J)$. Then $j \in J$ and $j \in J'$, which implies that $j + I \in \pi(J')$. Therefore, $\pi(J) \subset \pi(J')$.
+\end{proof}
 \begin{theorem}[Maximal Ideals and Fields]
     Let $R$ be a commutative ring with identity. An ideal $M \subset R$ is maximal if and only if the quotient ring $R/M$ is a field.
 \end{theorem}
@@ -135,7 +166,6 @@
     Given any arbitrary target $(r_1 + I_1, \dots, r_n + I_n)$, the element $r = r_1 e_1 + \dots + r_n e_n$ satisfies $\phi(r) = (r_1 + I_1, \dots, r_n + I_n)$. Thus, $\phi$ is surjective. The result then follows immediately from the First Isomorphism Theorem.
 \end{proof}
 
-\end{theorem}
 \section{Graph Theory \& Combinatorics}
 
 \begin{lemma}[The Handshaking Lemma]
@@ -261,5 +291,4 @@
     Therefore, $S$ is a basis for $\text{im } T$, meaning $\dim(\text{im } T) = m = n - k = \dim(V) - \dim(\ker T)$.
 \end{proof}
 
-\end{document}
 \end{document}
